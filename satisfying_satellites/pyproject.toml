@@ -4,7 +4,7 @@
 name = "Name"
 version = "0.1.0"
 description = "Description"
-authors = ["Author 1 <bast@fastmail.com>"]
+authors = ["Bast <bast@fastmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
