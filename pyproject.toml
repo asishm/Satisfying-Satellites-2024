@@ -10,7 +10,7 @@ target-version = "py312"
 fix = true
 # The directory containing the source code. If you choose a different project layout
 # you will need to update this value.
-src = ["src"]
+src = ["satisfying_satellites"]
 
 [tool.ruff.lint]
 # Enable all linting rules.
@@ -41,4 +41,6 @@ ignore = [
     # Annotations.
     "ANN101",
     "ANN102",
+    # "Not a crytographically secure random number generator"
+    "S311",
 ]
