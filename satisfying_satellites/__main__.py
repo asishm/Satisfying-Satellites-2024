@@ -69,10 +69,11 @@ TRIVIA_TIME = 5  # seconds
 async def trivia(interaction: discord.Interaction) -> None:
     """Start a round of overload trivia!"""  # noqa: D400
     # If no member is explicitly provided then we use the command user here
+    manipulate = random.choice([manipulators.homophonify, manipulators.uwufy])
 
     question = random.choice(trivia_module.questions)
-    munged_question = manipulators.homophonify(question.question)
-    munged_answers = [manipulators.homophonify(i) for i in question.answers]
+    munged_question = manipulate(question.question)
+    munged_answers = [manipulate(i) for i in question.answers]
 
     embed = discord.Embed(
         title="Trivia!",
@@ -80,7 +81,10 @@ async def trivia(interaction: discord.Interaction) -> None:
     )
     embed.set_author(name=question.category)
 
-    embed.add_field(name="_ _", value="## " + munged_question, inline=False)
+    embed.add_field(name="_ _", value="***" + munged_question + "***", inline=False)
+    embed.add_field(name="_ _", value="", inline=False)
+
+    embed.set_thumbnail(url="https://media.tenor.com/AvK7qHnqN2gAAAAi/alarm-clock-alarms.gif")
 
     selected_icons = list(VOTING_ICONS.items())[: len(munged_answers)]
 
@@ -95,6 +99,9 @@ async def trivia(interaction: discord.Interaction) -> None:
         await msg.add_reaction(icon[0])
 
     await asyncio.sleep(TRIVIA_TIME)
+
+    embed.set_thumbnail(url=None)
+    await msg.edit(embeds=[embed])
 
     # reload msg
     channel = await client.fetch_channel(msg.channel.id)
@@ -131,6 +138,11 @@ async def trivia(interaction: discord.Interaction) -> None:
                 name="A cheater?",
                 value=f"Votes: {votes} for {reaction}",
             )
+    if not reaction_totals:
+        embed.add_field(
+            name="No Answer Selected",
+            value="0 votes received",
+        )
 
     await interaction.channel.send("And the winners are...", embeds=[embed])
 
