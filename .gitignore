@@ -30,3 +30,4 @@ build/
 # MacOS
 .DS_Store
 /satisfying_satellites/secrets.py
+/satisfying_satellites/Pipfile.lock

@@ -25,3 +25,17 @@ def homophone(text: str) -> str:
 def homophonify(text: str) -> str:
     """Process a paragraph by converting each word into homophones."""
     return re.sub(r"\w+", lambda word: homophone(word.group(0)), text).capitalize()
+
+
+def uwufy(text: str) -> str:
+    """Uwufy the sentence."""
+    uwufied = ""
+    for index, value in enumerate(text):
+        caps = value.isupper()
+        if value in ("L", "l", "R", "r"):
+            uwufied += "W" if caps else "w"
+        elif value.lower() == "o" and text[index - 1] in ("N", "n", "M", "m") and index > 0:
+            uwufied += "yo"
+        else:
+            uwufied += value
+    return uwufied
